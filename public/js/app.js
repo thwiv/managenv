@@ -1,7 +1,13 @@
 /**
  * Created by thomaswalsh on 4/15/16.
  */
+
 $(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
     $('.add-env').click(function(){
         var environment = $(this).closest('.input-group').find('.env-name').val();
         var parent = $(this).data('parent');

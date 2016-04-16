@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="_token" content="{{ csrf_token() }}">
     <title>Laravel</title>
 
     <!-- Fonts -->
@@ -28,7 +28,8 @@
         }
         ul.tree ul{
             list-style-type:none;
-            margin-left:2em;
+            margin-left:0.25em;
+            margin-bottom:1em;
         }
     </style>
 </head>
