@@ -22,3 +22,7 @@ Route::get('/environment/{id?}', [
     'as'=> 'environment',
     'uses' => 'HomeController@getEnvironment'
 ]);
+Route::post('/environment/{parent_id?}', [
+    'as' => 'add-environment',
+    'uses' => 'HomeController@addEnvironment'
+]);

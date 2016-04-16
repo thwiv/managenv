@@ -35,7 +35,28 @@ class HomeController extends Controller
         return view('home', ['environments' => $parents]);
     }
 
-    public function getEnvironment($id = 0){
+    public function addEnvironment(Request $r, $parent = null){
+        $name = $r->input('name');
+        try{
+            $count = $this->environment->where('name', '=', $name)->count();
+            if($count > 0){
+                return response()->json(['success'=>false, 'error'=>'Name Must Be Unique']);
+            }
+            else{
+                $env = new Environment();
+                $env->name = $name;
+                $env->parent_id = $parent;
+                $env->save();
+                return response()->json(['success'=>true, 'id'=>$env->id]);
+            }
+        }
+        catch(\Exception $ex){
+            return response()->json(['success'=>false, 'error'=>$ex->getMessage()]);
+        }
 
+    }
+
+    public function getEnvironment($id = null){
+        return view('environment');
     }
 }
