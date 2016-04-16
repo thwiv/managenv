@@ -23,6 +23,13 @@
         .fa-btn {
             margin-right: 6px;
         }
+        ul.tree{
+            list-style-type:none;
+        }
+        ul.tree ul{
+            list-style-type:none;
+            margin-left:2em;
+        }
     </style>
 </head>
 <body id="app-layout">
