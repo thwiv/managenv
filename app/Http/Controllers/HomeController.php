@@ -56,7 +56,12 @@ class HomeController extends Controller
 
     }
 
-    public function getEnvironment($id = null){
-        return view('environment');
+    public function getEnvironment($id){
+        $env = $this->environment->find($id);
+        if($env){
+            $var_list = $env->fullVariableList();
+            return view('environment', ['env'=>$env, 'vars' => $var_list]);
+        }
+        abort(404);
     }
 }

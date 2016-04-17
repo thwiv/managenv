@@ -19,4 +19,18 @@ class Environment extends Model
     public function variables(){
         return $this->hasMany('App\Variable', 'environment_id', 'id');
     }
+
+    public function fullVariableList(){
+        $var_list = [];
+        $p = $this;
+        do{
+            foreach($p->variables as $var){
+                if(!array_key_exists($var->name, $var_list)){
+                    $var_list[$var->name] = $var;
+                }
+            }
+            $p = $p->parent;
+        }while(!empty($p->parent));
+        return $var_list;
+    }
 }

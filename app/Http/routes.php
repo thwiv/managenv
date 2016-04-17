@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/environment/{id?}', [
+Route::get('/environment/{id}', [
     'as'=> 'environment',
     'uses' => 'HomeController@getEnvironment'
 ]);

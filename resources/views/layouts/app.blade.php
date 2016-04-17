@@ -28,8 +28,9 @@
         }
         ul.tree ul{
             list-style-type:none;
-            margin-left:0.25em;
             margin-bottom:1em;
+            padding-left:1em;
+            border-left: dashed 1px darkgray;
         }
     </style>
 </head>
@@ -48,7 +49,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    ManagEnv
                 </a>
             </div>
 

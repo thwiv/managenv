@@ -26,4 +26,17 @@ $(document).ready(function(){
             }
         });
     });
+    $('#export').click(function(){
+
+    });
+    $('.del-value').click(function(){
+
+    });
+    $('#add-env').click(function(){
+
+    });
+    $('.var-value').blur(function(){
+
+    });
+
 });
