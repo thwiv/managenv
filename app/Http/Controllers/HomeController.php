@@ -63,5 +63,27 @@ class HomeController extends Controller
             return view('environment', ['env'=>$env, 'vars' => $var_list]);
         }
         abort(404);
+        return null;
+    }
+    public function setVariable(Request $r, $environment_id){
+        $name = strtoupper($r->input('name'));
+        $value = $r->input('value');
+        $var = $this->variable->where('environment_id', '=', $environment_id)->where('name', '=', $name)->first();
+        if(empty($var)){
+            $var = new Variable();
+            $var->environment_id = $environment_id;
+            $var->name = strtoupper($name);
+        }
+        $var->value = $value;
+        $var->save();
+        return view('partials.var-row', ['var'=>$var, 'show_delete'=>true]);
+    }
+    public function deleteVariable(Request $r){
+        $id = $r->input('id');
+
+    }
+    public function export(Request $r, $id){
+        abort(500);
+        return null;
     }
 }

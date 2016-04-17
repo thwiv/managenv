@@ -18,21 +18,7 @@
                         </thead>
                         <tbody>
                         @foreach($vars as $var)
-                            <tr>
-                                <td>
-                                    {{ $var->name }}
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control var-value" value="{{ $var->value }}" data-name="{{ $var->name }}" />
-                                </td>
-                                <td>
-                                    @if($var->environment_id == $env->id)
-                                        <button class="btn btn-danger del" data-id="{{ $var->id }}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                    @endif
-                                </td>
-                            </tr>
+                            @include('partials.var-row', ['var'=>$var, 'show_delete'=>$var->environment_id == $env->id])
                         @endforeach
                         </tbody>
                         <tfoot>
@@ -44,13 +30,13 @@
                                 <input type="text" id="add-env-value" class="form-control" />
                             </td>
                             <td>
-                                <button class="btn btn-primary" id="add-env">
+                                <button class="btn btn-primary" id="add-env" data-id="{{ $env->id }}">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="3">
                                 <a class="btn btn-default" href="/home" title="Go Back">Go Back</a>
                             </td>
                         </tr>

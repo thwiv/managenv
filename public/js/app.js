@@ -26,6 +26,27 @@ $(document).ready(function(){
             }
         });
     });
+    $('#export').click(function(){
+
+    });
+    $('.del-value').click(function(){
+
+    });
+    $('#add-env').click(function(){
+        var env_id = $(this).data('id');
+        var name = $('#add-env-name').val();
+        var value = $('#add-env-value').val();
+        $.post('/set-variable/'+env_id, {
+            name: name,
+            value: value
+        }, function(data){
+            $('.table').find('tbody').append(data);
+        });
+    });
+    $('.var-value').blur(function(){
+
+    });
+
 });
 
 //# sourceMappingURL=app.js.map

@@ -26,3 +26,15 @@ Route::post('/environment/{parent_id?}', [
     'as' => 'add-environment',
     'uses' => 'HomeController@addEnvironment'
 ]);
+Route::post('/set-variable/{environment_id}', [
+    'as' => 'set-variable',
+    'uses' => 'HomeController@setVariable'
+]);
+Route::post('/delete-variable', [
+    'as' => 'delete-variable',
+    'uses' => 'HomeController@deleteVariable'
+]);
+/*Route::export('/export/{id}', [
+    'as' => 'export',
+    'uses' => 'HomeController@export'
+]);*/
