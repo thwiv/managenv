@@ -40,7 +40,10 @@ $(document).ready(function(){
             name: name,
             value: value
         }, function(data){
-            $('.table').find('tbody').append(data);
+            if(data.success){
+
+                $('.table').find('tbody').append(data);
+            }
         });
     });
     $('.var-value').blur(function(){

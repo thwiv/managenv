@@ -30,7 +30,7 @@ class Environment extends Model
                 }
             }
             $p = $p->parent;
-        }while(!empty($p->parent));
+        }while(!empty($p));
         return $var_list;
     }
 }

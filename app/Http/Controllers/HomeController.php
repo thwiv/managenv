@@ -6,6 +6,7 @@ use App\Environment;
 use App\Http\Requests;
 use App\Variable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -69,14 +70,21 @@ class HomeController extends Controller
         $name = strtoupper($r->input('name'));
         $value = $r->input('value');
         $var = $this->variable->where('environment_id', '=', $environment_id)->where('name', '=', $name)->first();
+        $new = false;
         if(empty($var)){
             $var = new Variable();
             $var->environment_id = $environment_id;
             $var->name = strtoupper($name);
+            $new = true;
         }
         $var->value = $value;
         $var->save();
-        return view('partials.var-row', ['var'=>$var, 'show_delete'=>true]);
+        return response()->json([
+            'success'=>true,
+            'id'=>$var->id,
+            'new'=>$new,
+            'html'=> view('partials.var-row', ['var'=>$var, 'show_delete'=>true])
+        ]);
     }
     public function deleteVariable(Request $r){
         $id = $r->input('id');

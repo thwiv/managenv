@@ -17,7 +17,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($vars as $var)
+                        @foreach($vars as $name=>$var)
                             @include('partials.var-row', ['var'=>$var, 'show_delete'=>$var->environment_id == $env->id])
                         @endforeach
                         </tbody>
