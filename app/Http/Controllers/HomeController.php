@@ -6,6 +6,7 @@ use App\Environment;
 use App\Http\Requests;
 use App\Variable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -63,5 +64,48 @@ class HomeController extends Controller
             return view('environment', ['env'=>$env, 'vars' => $var_list]);
         }
         abort(404);
+        return null;
+    }
+    public function setVariable(Request $r, $environment_id){
+        $name = strtoupper($r->input('name'));
+        $value = $r->input('value');
+        $var = $this->variable->where('environment_id', '=', $environment_id)->where('name', '=', $name)->first();
+        $new = false;
+        if(empty($var)){
+            $var = new Variable();
+            $var->environment_id = $environment_id;
+            $var->name = strtoupper($name);
+            $new = true;
+        }
+        $var->value = $value;
+        $var->save();
+        return response()->json([
+            'success'=>true,
+            'id'=>$var->id,
+            'new'=>$new,
+            'html'=> view('partials.var-row', ['var'=>$var, 'show_delete'=>true])->render()
+        ]);
+    }
+    public function deleteVariable(Request $r){
+        $id = $r->input('id');
+        $env_id = $r->input('environment');
+        $var = $this->variable->where('environment_id', '=', $env_id)->where('id', '=', $id)->first();
+        $env = $this->environment->find($env_id);
+        $parent_var = null;
+        if(!empty($var)){
+            $parent_var = $env->firstParentValue($var->name);
+            $var->delete();
+            if(!empty($parent_var)){
+                return response()->json(['success'=>true,
+                        'parent_html'=> view('partials.var-row', ['var'=>$parent_var, 'show_delete'=>false])->render()]
+                );
+            }
+            return response()->json(['success'=>true, 'parent_html'=>null]);
+        }
+        return response()->json(['success'=>false, 'parent_html'=>null]);
+    }
+    public function export(Request $r, $id){
+        abort(500);
+        return null;
     }
 }
