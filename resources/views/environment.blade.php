@@ -36,7 +36,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colspan="2">
+                               <div class="error" style="display:none" id="add-error">
+
+                               </div>
+                            </td>
+                            <td>
                                 <a class="btn btn-default" href="/home" title="Go Back">Go Back</a>
                             </td>
                         </tr>

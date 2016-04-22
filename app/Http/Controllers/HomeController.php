@@ -83,12 +83,26 @@ class HomeController extends Controller
             'success'=>true,
             'id'=>$var->id,
             'new'=>$new,
-            'html'=> view('partials.var-row', ['var'=>$var, 'show_delete'=>true])
+            'html'=> view('partials.var-row', ['var'=>$var, 'show_delete'=>true])->render()
         ]);
     }
     public function deleteVariable(Request $r){
         $id = $r->input('id');
-
+        $env_id = $r->input('environment');
+        $var = $this->variable->where('environment_id', '=', $env_id)->where('id', '=', $id)->first();
+        $env = $this->environment->find($env_id);
+        $parent_var = null;
+        if(!empty($var)){
+            $parent_var = $env->firstParentValue($var->name);
+            $var->delete();
+            if(!empty($parent_var)){
+                return response()->json(['success'=>true,
+                        'parent_html'=> view('partials.var-row', ['var'=>$parent_var, 'show_delete'=>false])->render()]
+                );
+            }
+            return response()->json(['success'=>true, 'parent_html'=>null]);
+        }
+        return response()->json(['success'=>false, 'parent_html'=>null]);
     }
     public function export(Request $r, $id){
         abort(500);
