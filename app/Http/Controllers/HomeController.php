@@ -105,6 +105,15 @@ class HomeController extends Controller
         return response()->json(['success'=>false, 'parent_html'=>null]);
     }
     public function export(Request $r, $id){
+        $env = $this->environment->find($id);
+        if(!empty($env)){
+            $content = $env->fileContent();
+
+            return response($content, 200, [
+                'Content-Type' => 'text/plain',
+                'Content-Disposition' => 'attachment; filename="'.$env->name.'.env"'
+            ]);
+        }
         abort(500);
         return null;
     }

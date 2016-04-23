@@ -11,9 +11,9 @@
                         <tr>
                             <th>Variable</th>
                             <th>Value</th>
-                            <th><button class="btn btn-default" id="export">
+                            <th><a class="btn btn-default" href="{{ route('export', $env->id) }}">
                                     <span class="glyphicon glyphicon-floppy-save"></span>
-                                </button></th>
+                                </a></th>
                         </tr>
                         </thead>
                         <tbody>

@@ -34,7 +34,7 @@ Route::post('/delete-variable', [
     'as' => 'delete-variable',
     'uses' => 'HomeController@deleteVariable'
 ]);
-/*Route::export('/export/{id}', [
+Route::get('/export/{id}', [
     'as' => 'export',
     'uses' => 'HomeController@export'
-]);*/
+]);

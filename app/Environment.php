@@ -45,4 +45,12 @@ class Environment extends Model
         }while(!empty($p));
         return $var_list;
     }
+    public function fileContent(){
+        $content = "";
+        $variables = $this->fullVariableList();
+        foreach($variables as $var){
+            $content.= $var->name.'='.$var->value."\n";
+        }
+        return $content;
+    }
 }
