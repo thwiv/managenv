@@ -54,7 +54,7 @@ class ExportEnv extends Command
                 $filename.= '.env';
             }
             try{
-                File::put($filename, $env->fileContents());
+                File::put($filename, $env->fileContent());
             }
             catch(\Exception $ex){
                 $this->error($ex->getMessage());
