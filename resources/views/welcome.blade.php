@@ -8,7 +8,7 @@
                 <div class="panel-heading">Welcome</div>
 
                 <div class="panel-body">
-                    Your Application's Landing Page.
+                    <input type="password" class="form-control" id="key" placeholder="Please Enter Your Key Here" />
                 </div>
             </div>
         </div>

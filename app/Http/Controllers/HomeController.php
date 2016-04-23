@@ -108,4 +108,5 @@ class HomeController extends Controller
         abort(500);
         return null;
     }
+
 }
