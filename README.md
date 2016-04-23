@@ -1,27 +1,25 @@
-## Laravel PHP Framework
+## ManagEnv Environment Variable Management System
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+ManagEnv is a lightweight environment manager built on the Laravel framework. This framework is built for small private groups of 
+developers who find the passing around of .env files cumbersome. For larger systems with lots of intricate moving parts, a system 
+like Ansible, Chef, or Capistrano might fit you better. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Our company, like many others, has several environments that have different settings, like database passwords, API keys, and other 
+pieces that need to be managed. With one person managing this set up, it's easy, but once there are a bunch of developers trying 
+to manage new APIs, and all the while continuously doing builds and deployments, it can get unruly. Checking in these files to 
+source control is a big no-no, so we need to do something else.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+So ManagEnv is built to help with all that. Environment settings can be managed through the web interface, and exported into a 
+.env file for consumption. Exporting is built into a CLI to allow for scripted deployment.
 
-## Official Documentation
+## Installation
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Currently: 
+Clone the project. 
+Create your .env file from the .env.example
+   - Point it to a MySQL database. (PRIVATE)
+   - Run php artisan migrate to create the tables necessary.
+   - Set the APP_KEY: This is how your values get encrypted. Pick a good one.
+Point a web server to it.
+   
+First version, doesn't have all the bells and whistles yet. We're getting there, I promise. 
