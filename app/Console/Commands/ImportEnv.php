@@ -11,6 +11,8 @@ namespace App\Console\Commands;
 use App\Environment;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\File;
+use League\Flysystem\FileNotFoundException;
 
 class ImportEnv extends Command
 {
@@ -43,19 +45,9 @@ class ImportEnv extends Command
      */
     public function handle()
     {
-        $env = $this->environment->where('name', '=', $this->argument('name'))->first();
-        if(empty($env)){
-            $env = new Environment();
-            $env->name = $this->argument('name');
-            $parent = $this->option('parent');
-            if(!empty($parent)){
-                $p = $this->environment->where('name', '=', $parent)->first();
-                if(!empty($p)){
-                    $env->parent_id = $p->id;
-                }
-            }
-            $env->save();
-        }
+        //first read in the file, make sure it exists
+
+
 
     }
 }
