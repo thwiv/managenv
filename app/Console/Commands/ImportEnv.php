@@ -21,7 +21,7 @@ class ImportEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'env:import {location} {name} {--parent=}';
+    protected $signature = 'env:import {location} {--name=} {--parent=}';
 
     /**
      * The console command description.
@@ -47,6 +47,57 @@ class ImportEnv extends Command
     {
         //first read in the file, make sure it exists
 
+        try{
+            if(file_exists($this->argument('location'))){
+                $all = file_get_contents($this->argument('location'));
+
+                $envName = $this->option('name');
+                if(empty($envName)){
+                    $envName = explode('.', $this->argument('location'))[0];
+                    if(empty($envName)){
+                        $envName = 'default';
+                    }
+                }
+                $env = $this->environment->where('name', '=', $envName)->first();
+                $parent = null;
+                if(!empty($this->option('parent'))){
+                    $parent = $this->environment->where('name', '=', $this->option('parent'))->first();
+                    if(empty($parent)){
+                        $this->error('Parent Not Found');
+                        return;
+                    }
+                }
+                if(!empty($env)){
+                    //TODO:: Create the environment here. I'm going out drinking.
+                }
+                else{
+                    $env = new Environment();
+                    $env->name = $envName;
+                    if(!empty($parent)){
+                        $env->parent_id = $parent->id;
+                    }
+                    $env->save();
+                }
+                $lines = explode("\n", $all);
+                foreach($lines as $line){
+                    $split = explode("=", $line, 2);
+                    if(count($split) == 2){
+                        $varName = $split[0];
+                        $value = $split[1];
+
+                    }
+                    else{
+                        $this->warn("Could Not Read Variable: ".$line);
+                    }
+                }
+            }
+            else{
+                $this->error("The file does not exist");
+            }
+        }
+        catch(\Exception $ex){
+            $this->error("An Error Occured Importing The File: ".$ex->getMessage());
+        }
 
 
     }
