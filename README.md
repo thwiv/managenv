@@ -25,9 +25,9 @@ Currently:
 * Clone the project. 
 * Create your .env file from the .env.example
     * Point it to a SQL database. (PRIVATE)
+    * Run php artisan key:generate to create a secure APP_KEY
     * Run php artisan migrate to create the tables necessary.
-    * Set the APP_KEY: This is how your values get encrypted. Pick a good one.
-* Point a web server to it.
+    * Point a web server to it.
    
 This is the first version, and doesn't have all the bells and whistles yet. We're getting there, I promise.
 
@@ -42,12 +42,15 @@ values is as simple as typing in the textboxes.
 Environment variable names are always converted to all caps. This is usually standard for .env files. You can download a .env file by
 clicking the save button in the corner of any environment.
 
-The CLI currently allows only exporting .env files. More features are planned. The command line structure for that call:
+The CLI currently allows Exporting, Importing, Creating Environments, Setting and Getting Variables:
 
     php artisan env:export {environment name} {file location}
+    php artisan env:import {file location} --name={optional environment name} --parent={optional parent environment name}
+    php artisan env:create {name} --parent={optional parent environment name}
+    php artisan env:set {environment name} {variable name} {value}
+    php artisan env:get {environment name} {variable name}
 
 ## Planned Features
-* Expanding the CLI interface with Import, Get, and Set Functions
 * Generate .env.example files from both interfaces
 * Color/Symbol Coding of environment levels for easily visible inheritance
 * Updating security to allow the possibility of a semi-public server

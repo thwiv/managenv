@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: thomaswalsh
- * Date: 4/22/16
- * Time: 10:55 PM
+ * User: Chernobyl
+ * Date: 4/24/2016
+ * Time: 12:54 PM
  */
 namespace App\Console\Commands;
 
@@ -13,21 +13,21 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class ExportEnv extends Command
+class CreateEnv extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'env:export {name: The name of the Environment} {location: The location you would like the file to be created}';
+    protected $signature = 'env:create {name} {--parent=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Export env file to location';
+    protected $description = 'Create Environment';
 
     protected $environment;
 
@@ -45,23 +45,25 @@ class ExportEnv extends Command
     public function handle()
     {
         $env = $this->environment->where('name', '=', $this->argument('name'))->first();
-        if(!empty($env)){
-            $filename = $this->argument('location');
-            if(is_dir($filename)){
-                if(substr($filename, -1) != '/'){
-                    $filename .='/';
+        if(empty($env)) {
+            $parent = null;
+            $env = new Environment();
+            $env->name = $this->argument('name');
+            if($this->option('parent')){
+                $parent = $this->environment->where('name', '=', $this->option('parent'))->first();
+                if(empty($parent)){
+                    $this->error('Parent Does Not Exist');
+                    return;
                 }
-                $filename.= '.env';
+                else{
+                    $env->parent_id = $parent->id;
+                }
             }
-            try{
-                File::put($filename, $env->fileContent());
-            }
-            catch(\Exception $ex){
-                $this->error($ex->getMessage());
-            }
+            $env->save();
+            $this->info('Environment '.$env->name.' Created');
         }
         else{
-            $this->error('Environment Not Found');
+            $this->error('Environment Already Exists');
         }
     }
 }
