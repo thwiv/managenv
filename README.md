@@ -25,9 +25,9 @@ Currently:
 * Clone the project. 
 * Create your .env file from the .env.example
     * Point it to a SQL database. (PRIVATE)
+    * Run php artisan key:generate to create a secure APP_KEY
     * Run php artisan migrate to create the tables necessary.
-    * Set the APP_KEY: This is how your values get encrypted. Pick a good one.
-* Point a web server to it.
+    * Point a web server to it.
    
 This is the first version, and doesn't have all the bells and whistles yet. We're getting there, I promise.
 
