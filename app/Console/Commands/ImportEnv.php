@@ -9,6 +9,7 @@
 namespace App\Console\Commands;
 
 use App\Environment;
+use App\Variable;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\File;
@@ -50,8 +51,8 @@ class ImportEnv extends Command
         try{
             if(file_exists($this->argument('location'))){
                 $all = file_get_contents($this->argument('location'));
-
                 $envName = $this->option('name');
+
                 if(empty($envName)){
                     $envName = explode('.', $this->argument('location'))[0];
                     if(empty($envName)){
@@ -67,10 +68,7 @@ class ImportEnv extends Command
                         return;
                     }
                 }
-                if(!empty($env)){
-                    //TODO:: Create the environment here. I'm going out drinking.
-                }
-                else{
+                if(empty($env)){
                     $env = new Environment();
                     $env->name = $envName;
                     if(!empty($parent)){
@@ -78,13 +76,28 @@ class ImportEnv extends Command
                     }
                     $env->save();
                 }
+                else if(!empty($parent) && $parent->id  != $env->parent_id){
+                     $this->error('Parent is not associated with the environment');
+                    return;
+                }
                 $lines = explode("\n", $all);
                 foreach($lines as $line){
+                    $line = trim($line);
+                    if(empty($line) || str_is('#.*', $line)){
+                        continue;
+                    }
                     $split = explode("=", $line, 2);
                     if(count($split) == 2){
                         $varName = $split[0];
                         $value = $split[1];
-                        //TODO: Set the variables here. I'm going out drinking
+                        $var = $env->variables()->where('name', '=', $varName)->first();
+                        if(empty($var)){
+                            $var = new Variable();
+                            $var->environment_id = $env->id;
+                            $var->name = $varName;
+                        }
+                        $var->value = $value;
+                        $var->save();
                     }
                     else{
                         $this->warn("Could Not Read Variable: ".$line);
@@ -96,9 +109,9 @@ class ImportEnv extends Command
             }
         }
         catch(\Exception $ex){
+
             $this->error("An Error Occured Importing The File: ".$ex->getMessage());
+            $this->info($ex->getTraceAsString());
         }
-
-
     }
 }
