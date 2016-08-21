@@ -20,7 +20,7 @@ class ExportEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'env:export {name} {location}';
+    protected $signature = 'env:export {name: The name of the Environment} {location: The location you would like the file to be created}';
 
     /**
      * The console command description.

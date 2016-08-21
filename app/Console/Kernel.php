@@ -15,7 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ExportEnv::class,
         Commands\ImportEnv::class,
-        Commands\GetVar::class
+        Commands\GetVar::class,
+        Commands\SetVar::class,
+        Commands\CreateEnv::class
     ];
 
     /**

@@ -14,7 +14,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class GetVar extends Command
+class SetVar extends Command
 {
     /**
      * The name and signature of the console command.
