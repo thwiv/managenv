@@ -84,7 +84,7 @@ class ImportEnv extends Command
                     if(count($split) == 2){
                         $varName = $split[0];
                         $value = $split[1];
-
+                        //TODO: Set the variables here. I'm going out drinking
                     }
                     else{
                         $this->warn("Could Not Read Variable: ".$line);
