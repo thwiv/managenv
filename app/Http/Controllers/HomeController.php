@@ -1,23 +1,23 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Environment;
-use App\Http\Requests;
 use App\Variable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+
+	/** @var Environment */
     private $environment;
     private $variable;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+	/**
+	 * HomeController constructor.
+	 *
+	 * @param Environment $environment
+	 * @param Variable $variable
+	 */
     public function __construct(Environment $environment, Variable $variable)
     {
         $this->middleware('auth');
