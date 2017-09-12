@@ -38,34 +38,29 @@ class HomeController extends Controller
 
     public function addEnvironment(Request $r, $parent = null){
         $name = $r->input('name');
-        try{
-            $count = $this->environment->where('name', '=', $name)->count();
-            if($count > 0){
-                return response()->json(['success'=>false, 'error'=>'Name Must Be Unique']);
-            }
-            else{
-                $env = new Environment();
-                $env->name = $name;
-                $env->parent_id = $parent;
-                $env->save();
-                return response()->json(['success'=>true, 'id'=>$env->id]);
-            }
+        $count = $this->environment->where('name', '=', $name)->count();
+        if($count > 0){
+            return response()->json(['success'=>false, 'error'=>'Name Must Be Unique']);
         }
-        catch(\Exception $ex){
-            return response()->json(['success'=>false, 'error'=>$ex->getMessage()]);
+        else{
+            $env = new Environment();
+            $env->name = $name;
+            $env->parent_id = $parent;
+            $env->save();
+            return response()->json(['success'=>true, 'id'=>$env->id]);
         }
-
     }
 
     public function getEnvironment($id){
+    	/** @var Environment $env */
         $env = $this->environment->find($id);
         if($env){
             $var_list = $env->fullVariableList();
             return view('environment', ['env'=>$env, 'vars' => $var_list]);
         }
-        abort(404);
-        return null;
+        return response('Environment Not Found', 404);
     }
+
     public function setVariable(Request $r, $environment_id){
         $name = strtoupper($r->input('name'));
         $value = $r->input('value');
@@ -114,8 +109,7 @@ class HomeController extends Controller
                 'Content-Disposition' => 'attachment; filename="'.$env->name.'.env"'
             ]);
         }
-        abort(500);
-        return null;
+        return response('Environment Not Found', 404);
     }
 
 }

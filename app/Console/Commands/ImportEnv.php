@@ -13,6 +13,7 @@ use App\Variable;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use League\Flysystem\FileNotFoundException;
 
 class ImportEnv extends Command
@@ -49,8 +50,8 @@ class ImportEnv extends Command
         //first read in the file, make sure it exists
 
         try{
-            if(file_exists($this->argument('location'))){
-                $all = file_get_contents($this->argument('location'));
+            if(Storage::exists($this->argument('location'))){
+                $all = Storage::get($this->argument('location'));
                 $envName = $this->option('name');
 
                 if(empty($envName)){
