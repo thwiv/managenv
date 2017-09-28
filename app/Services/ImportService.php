@@ -1,18 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Chernobyl
- * Date: 4/24/2016
- * Time: 5:17 PM
- */
 namespace App\Services;
-
 
 use App\Environment;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use League\Flysystem\FileNotFoundException;
 
+/**
+ * Class ImportService
+ * @package App\Services
+ * @codeCoverageIgnore
+ */
 class ImportService
 {
     private $environment;
