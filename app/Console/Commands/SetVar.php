@@ -45,25 +45,20 @@ class SetVar extends Command
      */
     public function handle()
     {
-        try{
-            $env = $this->environment->where('name', '=', $this->argument('environment'))->first();
-            $variable_name = strtoupper($this->argument('variable'));
-            if(!empty($env)){
-                $var = $env->variables()->where('name', '=', $variable_name)->first();
-                if(empty($var)){
-                    $var = new Variable();
-                    $var->name = $variable_name;
-                }
-                $var->value = $this->argument('value');
-                $var->save();
-                $this->info('Variable Saved');
+        $env = $this->environment->where('name', '=', $this->argument('environment'))->first();
+        $variable_name = strtoupper($this->argument('variable'));
+        if(!empty($env)){
+            $var = $env->variables()->where('name', '=', $variable_name)->first();
+            if(empty($var)){
+                $var = new Variable();
+                $var->name = $variable_name;
             }
-            else{
-                $this->error('Environment Not Found');
-            }
+            $var->value = $this->argument('value');
+            $var->save();
+            $this->info('Variable Saved');
         }
-        catch(\Exception $ex){
-            $this->error($ex->getMessage());
+        else{
+            $this->error('Environment Not Found');
         }
     }
 }

@@ -20,7 +20,7 @@ class ExportEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'env:export {name: The name of the Environment} {location: The location you would like the file to be created}';
+    protected $signature = 'env:export {name} {location}';
 
     /**
      * The console command description.
@@ -54,7 +54,7 @@ class ExportEnv extends Command
                 $filename.= '.env';
             }
             try{
-                File::put($filename, $env->fileContent());
+                Storage::put($filename, $env->fileContent());
             }
             catch(\Exception $ex){
                 $this->error($ex->getMessage());

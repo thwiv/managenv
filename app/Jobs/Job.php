@@ -4,6 +4,11 @@ namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 
+/**
+ * Class Job
+ * @package App\Jobs
+ * @codeCoverageIgnore
+ */
 abstract class Job
 {
     /*

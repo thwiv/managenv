@@ -44,26 +44,21 @@ class GetVar extends Command
      */
     public function handle()
     {
-        try{
-            $env = $this->environment->where('name', '=', $this->argument('environment'))->first();
-            if(!empty($env)){
-                $var = $env->variables()->where('name', '=', $this->argument('variable'))->first();
-                if(empty($var)){
-                    $var = $env->firstParentValue($this->argument('variable'));
-                }
-                if(!empty($var)){
-                    $this->info($var->value);
-                }
-                else{
-                    $this->error('Variable Not Found');
-                }
+        $env = $this->environment->where('name', '=', $this->argument('environment'))->first();
+        if(!empty($env)){
+            $var = $env->variables()->where('name', '=', $this->argument('variable'))->first();
+            if(empty($var)){
+                $var = $env->firstParentValue($this->argument('variable'));
+            }
+            if(!empty($var)){
+                $this->info($var->value);
             }
             else{
-                $this->error('Environment Not Found');
+                $this->error('Variable Not Found');
             }
         }
-        catch(\Exception $ex){
-            $this->error($ex->getMessage());
+        else{
+            $this->error('Environment Not Found');
         }
     }
 }
